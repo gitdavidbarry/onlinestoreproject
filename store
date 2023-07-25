@@ -1,0 +1,155 @@
+const store = {
+    shop_info:[
+        {
+            shopname: 'Zara',
+            address: 'Manhattan Avenue, New York',
+            uniqueCode: 'NY656'
+        }
+    ],
+
+    user_info:[
+        {
+            user_firstname: 'Angelina',
+            user_lastname: 'Jolie',
+            user_age: 47,
+            user_birthday: '4.06.1975'
+        }
+    ],
+
+    clothing_items:[
+        {
+            item_name: 'Blue jeans',
+            item_category: 'Trousers',
+            item_price_$: 50,
+            item_stock_q: 456
+        }
+    ],
+
+    // Add users
+    
+    
+    add_user: (userID, shopID) => {
+        if(!search_firstname(userID.user_firstname, shopID)) {
+            add(userID, shopID);
+            console.log(`You added ${userID.user_firstname} to the Users List`);
+            view_users(shopID)
+        } else {
+            console.log(
+                `User ${userID.user_firstname} is already on the list, cannot add user.`
+            )
+            console.log(` `);
+        }
+    },
+
+    remove_user: (userID, shopID) => {
+        if(search_firstname(userID, shopID)) {
+            delete_user(userID, shopID);
+            console.log(`You removed ${userID} on the Users List`);
+            view_users(shopID);
+        } else {
+            console.log(
+                `${userID} not found in User's List`
+            )
+        }
+    },
+
+    // Add items and item stocks
+    add_item: (userID, shopID) => {
+        if(!search_firstname(userID.user_firstname, shopID)) {
+            add(userID, shopID);
+            console.log(`You added ${userID.user_firstname} to the Users List`);
+            view_users(shopID)
+        } else {
+            console.log(
+                `User ${userID.user_firstname} is already on the list, cannot add user.`
+            )
+            console.log(` `);
+        }
+    },
+
+    restock_item: (item, shopID, quantity) => {
+        if(search_item(item, shopID)) {
+            shopID.forEach(i => {
+                if(i.item_name == item) {
+                    i.item_stock_q += quantity;
+                }
+            })
+
+            console.log(`You added ${quantity} ${item} on its inventory.`)
+            view_items(shopID);
+        } else {
+            console.log(`Sorry cound not find ${item} on the item list.`)
+        }
+    },
+
+    remove_item: (userID, shopID) => {
+        delete_item(userID, shopID)
+        console.log(`You removed ${userID} on the item list.`);
+        view_items(shopID)
+    }
+}
+
+
+//===================================================
+
+store.add_user(
+    {
+        user_firstname: 'Jisoo',
+        user_lastname: 'Kim',
+        user_age: 28,
+        user_birthday: '1.03.1995'
+    },
+    store.user_info
+)
+store.add_user(
+    {
+        user_firstname: 'Roseanne',
+        user_lastname: 'Park',
+        user_age: 26,
+        user_birthday: '2.11.1997'
+    },
+    store.user_info
+)
+store.add_user(
+    {
+        user_firstname: 'Jennie',
+        user_lastname: 'Kim',
+        user_age: 27,
+        user_birthday: '1.16.1996'
+    },
+    store.user_info
+)
+store.add_user(
+    {
+        user_firstname: 'Lalisa',
+        user_lastname: 'Manobal',
+        user_age: 26,
+        user_birthday: '3.27.1997'
+    },
+    store.user_info
+)
+
+store.remove_user('Roseanne', store.user_info) // removed Roseanne.
+
+
+store.add_item(
+    {
+        item_name: 'Jogging Pants',
+        item_category: 'Trousers',
+        item_price_$: 30,
+        item_stock_q: 199
+    },
+    store.clothing_items
+)
+store.add_item(
+    {
+        item_name: 'Shorts',
+        item_category: 'Trousers',
+        item_price_$: 40,
+        item_stock_q: 99
+    },
+    store.clothing_items
+)
+store.remove_item('Shorts', store.clothing_items)
+store.restock_item('Blue jeans', store.clothing_items, 10)
+store.restock_item('Blue jeans', store.clothing_items, 20)
